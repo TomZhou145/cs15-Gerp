@@ -1,0 +1,170 @@
+/**********************************************************
+* Project 4: Gerp
+* CS 15
+* README
+* Fahim Rashid Tom Zhou
+*********************************************************/
+
+Compile/run:
+     - Compile using
+            make gerp
+     - run executable with the format:
+       ./gerp [directory] [outputFile]
+            
+
+
+Program Purpose: Gerp is a word search engine that is organized with hash 
+map. By provinding a word, the program can returns all of its occurances in 
+any provided Directory. 
+
+
+Acknowledgements: Office Hours help.
+
+
+Files: 
+main.cpp
+      the main function that makes the program user interactive, initialize 
+      gerp. 
+
+Makefile
+       make file for Gerp compilation, unit_test, and clear
+
+Gerp.h
+       Gerp class header file, contains a lot of functionalities to search,
+       contains the HashMap, and the directory tree
+Gerp.cpp
+       Gerp class implementation
+
+HashTable.h
+       The HashTable class that is in charge of storing all data in layers
+       of vectors, lists and structs for constant time search. 
+
+HashTable.cpp
+       HashTable implementation. 
+
+DirNode.h
+       DirNode class used for FSTree making, serves as individual nodes
+
+
+FSTree.h
+       FSTree class used to store a whole directory using tree stucture.
+       Its nodes are DirNodes
+
+Testing: 
+unit_tests.h
+       unit test the functions we created for Gerp
+
+dataSetInfo.txt
+       directory information reference for correct file storage
+
+out.txt
+       the main out text file for program 
+
+hagoo.txt/new.mine
+       alternative textfiles out to test @f functionalities
+
+Architectural Overview:
+
+       In the Gerp.cpp we have an instance of the HashTable implmentation which
+       we created, and an instance of the FSTree which stores the files and
+       directories into nodes and make it into a tree. If we go deeper into the
+       HashTable implementation we used a vector of lists of SameWord Nodes for
+       a table. The List of SameWordNode had a insensitive word value, and an
+       vector of the SameWordList. That SameWordList had Node values inside it
+       which contained a string of the word, and a vector of pairs of all the
+       times it occured in the file, which we would later use.
+       
+       After we obtain the occurances, we would use those in the DIRECTORY,
+       which is the vector of a vector of strings to find the the actual
+       sentence which stored in that, and with the same occurance pair we would
+       use the file value to find the path to get there from the vector
+       Dir_Path, which is a vector of strings.
+
+Data Structures:
+For our data structure we used complexed layers of vectors, structs, lists,
+has well as a master hash map to contain all the data we would be inputting
+into this project.
+
+       In our Gerp.cpp implementation we also used a set to avoid reptitive
+       storage of the words on the same line. We also use pairs which we 
+       mention below to store the file and line number and the set was
+       implemented on those.
+
+       To store all the directory file content, we used a double 
+              layered vector. We saved every individual files into a vector 
+              with the vector element being every single line of a file. 
+              Then the file vectors are saved in a directory vector that 
+              keeps track and indexes all the files. 
+
+              Another vector of the same size is created to keep track
+              of all the paths. All three of the indexes are synced, 
+              thus All 3 vectors act together as a file directory, which
+              allows constant time access to all of the data that we sto
+
+       
+       To store the contents of all the words and we utilized the HashMap
+       datastructure and created our own. From the bottom up we first had the
+       struct Node: This is a bundle of a word and a vector of pair of 
+              integers. 
+              The word saved in this node is case sensitve. T
+              he vectors of pairs of integers keep tracks of two numbers: a
+              file index, and a line index used for later 
+              line retrieval. The pair of integers are kept in the vectors to
+              keep in track of all the occurances of all the times the specific
+              word occurs in all files. 
+
+       struct SameWordNode: This is a struct that contains a cases insenstive
+       version of a word, in this case is a comparison for the key, and an 
+       array of the previous Node struct. This keeps track of ALL case 
+       variations of a SINGLE word with an all lower case key for comparison
+       in the case of collision & chaining. 
+
+       Linked List(chaining): the next layer up is a list structure implemented
+       for the case of collision. Each element of this linked list: WordList,
+       contains a SameWordNode. In the case of collision, the incoming key will
+       compare with the word element in the node to ensure it access the 
+       correct word. 
+
+       The master hash table is a vector called Table, its elements are the 
+       WordList link list. Which we utilized to avoid collisions and made it so
+       we can chain the values together.
+
+Testing: 
+       
+       We went through extensive unit testing for our helper function in phase
+       one, we tested through all the possible cases.
+       We tried to traverse through directories to make sure
+       all addresses are correctly shwon.
+       For the StripNonAlphaNum function, 
+       we tested all the edge cases that includes empty string input as 
+       well as string that ends up being stripped empty.
+       To test the address printing function, we copied the directory 
+       information sheet that included the number of files to match the 
+       number of lines outputted to make sure the correct amount of texts 
+       files are displayed. 
+       
+       To test the tree properly prints and are implemented pre hash map, 
+       we printed out all the saved file address. By not implementing 
+       this test, it cost us a lot of time early on debugging seg faul errors
+       due to not all the files being saved properly. 
+
+       To test our hash map implementation, we used the unit_test to create
+       test functions that manually hashes nodes. By manually insert in hash
+       nodes and check for debug statements that are now deleted by the end 
+       of the program, we ensured our hashing, insertion, expansion, rehashing
+       are working exactly the way it should. We tested edge cases like hashing
+       in a string that is stripped empty. We used if statements to prevent 
+       empty string from hashing at all to stop extra space usage and hashing 
+       error. 
+       A lot of our output tests are done through diffing, and 
+       manually checking, for example, repeated words in a same line check 
+       is done through manually checking. 
+
+       To test @f, we simply ran the function call, and it worked. 
+       We tried to use unit_test to a certain extend. But it ran into timeout
+       issues when large direcotries are imported. We decided 
+       to not rely on it too much and focus more on debuggin by running through
+       the program. 
+
+
+Time Spent: 35hr

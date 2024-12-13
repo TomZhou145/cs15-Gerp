@@ -1,0 +1,4 @@
+/comp/15/files/proj-gerp-test-dirs/tinyData/test.txt:5: we are the champions
+/comp/15/files/proj-gerp-test-dirs/tinyData/test.txt:6: we we we
+/comp/15/files/proj-gerp-test-dirs/tinyData/a/you:1: grep grep grep!
+/comp/15/files/proj-gerp-test-dirs/tinyData/hello:1: gerp gerp gerp
